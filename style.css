@@ -343,3 +343,100 @@ header {
   z-index: 200; pointer-events: none;
 }
 .toast.show { opacity: 1; transform: translateY(0); }
+/* Zoom features */
+.product-preview {
+  position: relative;
+  cursor: zoom-in;
+}
+.zoom-hint-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(11, 12, 19, 0.45);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transition: opacity 0.2s ease;
+  pointer-events: none;
+}
+.zoom-hint-badge {
+  background: rgba(245, 158, 11, 0.9);
+  color: #000;
+  font-weight: 800;
+  font-size: 0.78rem;
+  padding: 6px 12px;
+  border-radius: 999px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+  transform: translateY(6px);
+  transition: transform 0.2s ease;
+}
+.product-card:hover .zoom-hint-overlay {
+  opacity: 1;
+}
+.product-card:hover .zoom-hint-badge {
+  transform: translateY(0);
+}
+
+/* Modal Zoom Controls */
+.modal-zoom-bar {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: rgba(0, 0, 0, 0.4);
+  padding: 4px 8px;
+  border-radius: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+.zoom-btn {
+  background: transparent;
+  border: 1px solid transparent;
+  color: #cbd5e1;
+  padding: 4px 10px;
+  border-radius: 6px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+.zoom-btn:hover {
+  background: rgba(255, 255, 255, 0.1);
+  color: #fff;
+}
+.zoom-btn.active {
+  background: #f59e0b;
+  color: #000;
+}
+.modal-body {
+  overflow: auto !important;
+  cursor: zoom-in;
+  position: relative;
+}
+.modal-body.zoomed {
+  cursor: zoom-out;
+}
+.modal-body img {
+  cursor: zoom-in;
+  transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  transform-origin: center center;
+}
+.modal-body.zoomed img {
+  cursor: zoom-out;
+}
+.zoom-tip {
+  position: absolute;
+  bottom: 12px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(11, 12, 19, 0.85);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  color: #fde68a;
+  font-size: 0.75rem;
+  font-weight: 600;
+  padding: 4px 12px;
+  border-radius: 999px;
+  pointer-events: none;
+  backdrop-filter: blur(8px);
+}

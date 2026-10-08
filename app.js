@@ -4,6 +4,7 @@ let searchQuery = '';
 let currentFiltered = [];
 let modalIndex = 0;
 let carouselIndex = 0;
+let currentZoom = 1;
 
 // DOM Elements
 const galleryGrid = document.getElementById('galleryGrid');
@@ -31,6 +32,7 @@ const carouselNextBtn = document.getElementById('carouselNextBtn');
 
 // Modal elements
 const modalOverlay = document.getElementById('modalOverlay');
+const modalBody = document.getElementById('modalBody');
 const modalTitle = document.getElementById('modalTitle');
 const modalImg = document.getElementById('modalImg');
 const modalCat = document.getElementById('modalCat');
@@ -127,10 +129,16 @@ function renderGallery() {
     const safePath = encodeURI(item.path);
 
     card.innerHTML = `
-      <div class="product-preview">
+      <div class="product-preview" title="Nhấp vào để phóng to xem chi tiết">
         <span class="product-tag">${item.category}</span>
-        <span class="product-fps">30 FPS</span>
+        
         <img src="${safePath}" alt="${item.name}" loading="lazy" onload="recordDim(this, 'dim-${index}')">
+        <div class="zoom-hint-overlay">
+          <div class="zoom-hint-badge">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line><line x1="11" y1="8" x2="11" y2="14"></line><line x1="8" y1="11" x2="14" y2="11"></line></svg>
+            Phóng To Xem
+          </div>
+        </div>
       </div>
       <div class="product-info">
         <div class="product-name" title="${item.name}">${item.name}</div>
@@ -143,14 +151,14 @@ function renderGallery() {
             <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
             Chọn Mẫu Này
           </button>
-          <button class="btn-icon-action view-btn-card" title="Xem chi tiết phóng to">
+          <button class="btn-icon-action view-btn-card" title="Phóng to chi tiết">
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
           </button>
         </div>
       </div>
     `;
 
-    // Click whole card to open modal
+    // Click whole card to open modal and zoom in
     card.addEventListener('click', () => openModal(index));
 
     // Button "Chọn Mẫu Này"
@@ -171,6 +179,48 @@ window.recordDim = function(img, elementId) {
   }
 };
 
+// Zoom logic
+function setZoom(lvl) {
+  currentZoom = lvl;
+  document.querySelectorAll('.zoom-btn').forEach(btn => {
+    btn.classList.toggle('active', parseInt(btn.getAttribute('data-zoom')) === currentZoom);
+  });
+  
+  if (currentZoom === 1) {
+    modalImg.style.transform = 'none';
+    modalBody.classList.remove('zoomed');
+  } else {
+    modalImg.style.transform = `scale(${currentZoom})`;
+    modalBody.classList.add('zoomed');
+  }
+
+  const tip = document.querySelector('.zoom-tip');
+  if (tip) {
+    tip.textContent = currentZoom > 1 
+      ? '🔍 Nhấp vào ảnh để thu nhỏ về 1x' 
+      : '🔍 Nhấp vào ảnh để phóng to 2x / thu nhỏ';
+  }
+}
+
+// Click on modal image to toggle zoom
+modalImg.addEventListener('click', (e) => {
+  e.stopPropagation();
+  if (currentZoom === 1) {
+    setZoom(2);
+  } else {
+    setZoom(1);
+  }
+});
+
+// Click zoom buttons
+document.querySelectorAll('.zoom-btn').forEach(btn => {
+  btn.addEventListener('click', (e) => {
+    e.stopPropagation();
+    const zoomVal = parseInt(btn.getAttribute('data-zoom'));
+    setZoom(zoomVal);
+  });
+});
+
 function openModal(index) {
   if (!currentFiltered[index]) return;
   modalIndex = index;
@@ -189,6 +239,8 @@ function openModal(index) {
   };
   tempImg.src = safePath;
 
+  setZoom(1); // Reset to 1x on open
+
   modalOrderBtn.onclick = () => copyOrderCode(item);
 
   modalOverlay.classList.add('active');
@@ -196,6 +248,7 @@ function openModal(index) {
 
 function closeModal() {
   modalOverlay.classList.remove('active');
+  setZoom(1);
 }
 
 modalCloseBtn.addEventListener('click', closeModal);
@@ -282,7 +335,7 @@ function updateCarousel() {
   carouselImg.src = safePath;
   carouselCat.textContent = item.category;
   carouselTitle.textContent = item.name;
-  carouselMeta.textContent = `Phân loại: ${item.category} • Hoạt ảnh mượt 30 FPS`;
+  carouselMeta.textContent = `Phân loại: ${item.category}`;
   carouselCounter.textContent = `Mẫu ${carouselIndex + 1} / ${currentFiltered.length}`;
 
   const thumbs = carouselStrip.querySelectorAll('.carousel-thumb');

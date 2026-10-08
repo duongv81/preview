@@ -24,7 +24,7 @@
         </div>
         <div>
           <h1>SHOWROOM TRANG BỊ & HIỆU ỨNG GAME</h1>
-          <p>Kho mẫu hoạt ảnh 30 FPS cao cấp • Hiển thị trực quan chân thực</p>
+          <p>Kho mẫu hoạt ảnh Hiển thị trực quan chân thực</p>
         </div>
       </div>
       <div class="header-actions">
@@ -46,10 +46,10 @@
     <div class="store-banner">
       <div class="banner-text">
         <span class="banner-tag">Hướng dẫn</span>
-        <span>Quý khách ưng ý mẫu nào chỉ cần bấm <strong>"Chọn Mẫu Này"</strong> để sao chép mã và gửi cho Shop để đặt hàng ngay!</span>
+        <span>Quý khách nhấp vào ảnh để <strong>phóng to xem chi tiết</strong>. Ưng ý mẫu nào bấm <strong>"Chọn Mẫu Này"</strong> để gửi đặt hàng!</span>
       </div>
       <div style="font-size: 0.8rem; color: #cbd5e1;">
-        ✨ Hoạt ảnh chuẩn 30 FPS mượt mà
+        ✨ Hiệu ứng hoạt ảnh chất lượng cao
       </div>
     </div>
 
@@ -146,15 +146,25 @@
     <div class="modal-content">
       <div class="modal-header">
         <h3 id="modalTitle">Chi Tiết Mẫu Trang Bị</h3>
-        <button class="modal-close" id="modalCloseBtn">
-          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
-        </button>
+        <div style="display: flex; align-items: center; gap: 12px;">
+          <!-- Zoom Level Bar -->
+          <div class="modal-zoom-bar">
+            <span style="font-size:0.75rem; color:#94a3b8; margin-right:4px;">Phóng to:</span>
+            <button class="zoom-btn active" data-zoom="1">1x</button>
+            <button class="zoom-btn" data-zoom="2">2x</button>
+            <button class="zoom-btn" data-zoom="3">3x</button>
+          </div>
+          <button class="modal-close" id="modalCloseBtn">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+          </button>
+        </div>
       </div>
-      <div class="modal-body">
+      <div class="modal-body" id="modalBody">
         <button class="modal-nav prev" id="modalPrevBtn">
           <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="15 18 9 12 15 6"></polyline></svg>
         </button>
         <img id="modalImg" src="" alt="Mẫu phóng to">
+        <div class="zoom-tip">🔍 Nhấp vào ảnh để phóng to 2x / thu nhỏ</div>
         <button class="modal-nav next" id="modalNextBtn">
           <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"></polyline></svg>
         </button>
@@ -163,7 +173,7 @@
         <div class="modal-info-list">
           <div>Phân loại: <strong id="modalCat" style="color: #f59e0b;">-</strong></div>
           <div>Độ phân giải: <strong id="modalDim">-</strong></div>
-          <div>Chuẩn tốc độ: <strong style="color: #a78bfa;">30 FPS</strong></div>
+          
         </div>
         <div class="modal-buttons">
           <button class="btn-order-modal" id="modalOrderBtn">
@@ -178,7 +188,7 @@
   <!-- Notification Toast -->
   <div class="toast" id="toast">Đã sao chép mã mẫu!</div>
 
-  <script src="data.js?v=20261009023509"></script>
-  <script src="app.js?v=20261009023509"></script>
+  <script src="data.js?v=20261009023918"></script>
+  <script src="app.js?v=20261009023918"></script>
 </body>
 </html>
