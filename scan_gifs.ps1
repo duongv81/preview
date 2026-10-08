@@ -3,14 +3,21 @@
 $previewDir = $PSScriptRoot
 if (-not $previewDir) { $previewDir = (Get-Location).Path }
 
-# Get all category directories
-$subDirs = Get-ChildItem -Path $previewDir -Directory | Where-Object { $_.Name -ne ".git" }
+# Ignore technical folders like .git and images (assets of the website itself)
+$ignoreDirs = @(".git", "images", "build")
+
+# Get category directories
+$subDirs = Get-ChildItem -Path $previewDir -Directory | Where-Object { $ignoreDirs -notcontains $_.Name }
 $categories = @($subDirs | ForEach-Object { $_.Name })
 
 $supportedExtensions = @(".gif", ".png", ".webp", ".jpg", ".jpeg")
 $allFiles = Get-ChildItem -Path $previewDir -Recurse -File | Where-Object {
     $ext = $_.Extension.ToLower()
-    $supportedExtensions -contains $ext -and $_.FullName -notlike "*\.git\*"
+    $isIgnored = $false
+    foreach ($ign in $ignoreDirs) {
+        if ($_.FullName -like "*\$ign\*") { $isIgnored = $true; break }
+    }
+    $supportedExtensions -contains $ext -and -not $isIgnored
 }
 
 $items = @()

@@ -1,5 +1,6 @@
 ﻿window.GIF_DATA = {
     "categories":  [
+                       "gay",
                        "vòng ánh sáng",
                        "đeo lưng"
                    ],
@@ -149,5 +150,5 @@
                       "size":  1101384
                   }
               ],
-    "updatedAt":  "2026-10-09 02:43:59"
+    "updatedAt":  "2026-10-09 02:54:38"
 };

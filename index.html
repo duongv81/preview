@@ -6,179 +6,211 @@
   <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
   <meta http-equiv="Pragma" content="no-cache">
   <meta http-equiv="Expires" content="0">
-  <link rel="icon" type="image/x-icon" href="favicon.ico">`r`n  <title>Showroom Trang Bị & Hiệu Ứng Game VIP</title>
+  <link rel="icon" type="image/x-icon" href="favicon.ico">
+  <title>Showroom Trang Bị & Hào Quang Ngọc Rồng</title>
+  
+  <!-- Google Fonts: Be Vietnam Pro & VT323 (Game Retro Pixel) -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@600&family=VT323&display=swap" rel="stylesheet">
+  
+  <!-- Font Awesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  
   <link rel="stylesheet" href="style.css">
 </head>
 <body class="bg-dark">
-  <div class="ambient-glow"></div>
 
-  <div class="container">
-    <!-- Header Shop -->
-    <header>
-      <div class="brand">
-        <div class="brand-icon"><img src="favicon.ico" alt="Logo"></div>
-        <div>
-          <h1>SHOWROOM TRANG BỊ & HIỆU ỨNG GAME</h1>
-          <p>Kho mẫu hoạt ảnh Hiển thị trực quan chân thực</p>
+  <!-- Header NRO Style -->
+  <header>
+    <div class="header-inner">
+      <a href="#" class="header-logo">
+        <img src="favicon.ico" alt="Logo">
+        <div class="header-title-text">
+          <h1>NGỌC RỒNG ONLINE</h1>
+          <p>SHOWROOM TRANG BỊ & HÀO QUANG</p>
         </div>
-      </div>
-      <div class="header-actions">
-        <div class="badge-shop">
-          <span>Kho mẫu:</span>
-          <strong id="badgeTotalGifs">0</strong>
-        </div>
-        <div class="badge-shop">
-          <span>Phân loại:</span>
-          <strong id="badgeTotalCats">0</strong>
-        </div>
-        <div class="badge-shop" style="color: #34d399; border-color: rgba(52, 211, 153, 0.3);">
-          <span>● Trực tuyến</span>
-        </div>
-      </div>
-    </header>
+      </a>
+      
+      <nav class="header-nav">
+        <a href="#" class="nav-link"><i class="fa-solid fa-house mr-1"></i> TRANG CHỦ</a>
+        <a href="#" class="nav-link active"><i class="fa-solid fa-wand-magic-sparkles mr-1"></i> KHO TRANG BỊ</a>
+        <a href="#" class="nav-link"><i class="fa-solid fa-sun mr-1"></i> HÀO QUANG</a>
+        <a href="#" class="nav-link"><i class="fa-solid fa-feather mr-1"></i> ĐEO LƯNG</a>
+      </nav>
 
-    <!-- Store Notice Banner -->
-    <div class="store-banner">
-      <div class="banner-text">
-        <span class="banner-tag">Hướng dẫn</span>
-        <span>Quý khách nhấp vào ảnh để <strong>phóng to xem chi tiết</strong>. Ưng ý mẫu nào bấm <strong>"Chọn Mẫu Này"</strong> để gửi đặt hàng!</span>
-      </div>
-      <div style="font-size: 0.8rem; color: #cbd5e1;">
-        ✨ Hiệu ứng hoạt ảnh chất lượng cao
+      <div class="header-status-badge">
+        <i class="fa-solid fa-circle text-emerald-400" style="color: #34d399; font-size: 8px;"></i>
+        <span>CƯ DÂN ONLINE</span>
       </div>
     </div>
+  </header>
 
-    <!-- Controls Panel -->
-    <div class="controls-panel">
-      <!-- Category Tabs -->
-      <div class="tabs-row" id="categoryTabs"></div>
-
-      <!-- Filters & Sliders -->
-      <div class="inputs-row">
-        <!-- Search -->
-        <div class="search-box">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <circle cx="11" cy="11" r="8"></circle>
-            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
-          </svg>
-          <input type="text" id="searchInput" placeholder="Tìm kiếm mẫu trang bị theo tên...">
-        </div>
-
-        <!-- Size Slider -->
-        <div class="slider-control" title="Kéo thanh trượt để phóng to / thu nhỏ khung xem">
-          <label>
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <rect x="3" y="3" width="18" height="18" rx="2"></rect>
-              <circle cx="8.5" cy="8.5" r="1.5"></circle>
-              <polyline points="21 15 16 10 5 21"></polyline>
-            </svg>
-            Kích cỡ xem:
-          </label>
-          <input type="range" id="sizeSlider" min="150" max="420" value="240" step="10">
-          <span class="slider-val" id="sizeVal">240px</span>
-        </div>
-
-        <!-- Background Mode Selector -->
-        <div class="bg-selector" title="Thay đổi màu nền để xem độ tương phản và hiệu ứng phát sáng">
-          <button class="bg-opt dark active" data-bg="bg-dark" title="Nền Tối Sang Trọng"></button>
-          <button class="bg-opt black" data-bg="bg-black" title="Nền Đen Huyền (Soi Hào Quang Rực Rỡ)"></button>
-          <button class="bg-opt checker" data-bg="bg-checker" title="Nền Trong Suốt (Kiểm Tra Viền)"></button>
-          <button class="bg-opt white" data-bg="bg-white" title="Nền Sáng"></button>
-        </div>
-
-        <!-- View Switcher -->
-        <div class="view-switcher">
-          <button class="view-btn active" id="viewGridBtn">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <rect x="3" y="3" width="7" height="7"></rect>
-              <rect x="14" y="3" width="7" height="7"></rect>
-              <rect x="14" y="14" width="7" height="7"></rect>
-              <rect x="3" y="14" width="7" height="7"></rect>
-            </svg>
-            Bộ sưu tập
-          </button>
-          <button class="view-btn" id="viewCarouselBtn">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <rect x="2" y="7" width="20" height="14" rx="2"></rect>
-              <path d="M16 3H8"></path>
-            </svg>
-            Trượt xem
-          </button>
+  <div class="main-wrapper">
+    <!-- Retro Game Banner Zone -->
+    <div class="game-banner">
+      <div class="banner-overlay"></div>
+      <div class="banner-content">
+        <h1 class="banner-title">SHOWROOM TRANG BỊ NGỌC RỒNG</h1>
+        <div class="banner-subtitle">
+          ★ KHU TRƯNG BÀY HÀO QUANG & TRANG BỊ ĐEO LƯNG DÀNH CHO CƯ DÂN VŨ TRỤ ★
         </div>
       </div>
     </div>
 
-    <!-- Carousel Slider View -->
-    <div class="carousel-view" id="carouselView">
-      <div class="carousel-stage">
-        <span class="product-tag" id="carouselCat">Phân loại</span>
-        <img id="carouselImg" src="" alt="Mẫu trưng bày">
-        <div style="margin-top: 14px; text-align: center;">
-          <h3 id="carouselTitle" style="font-size: 1.15rem; color: #fff; font-weight: 800;"></h3>
-          <p id="carouselMeta" style="color: var(--text-muted); font-size: 0.88rem; margin-top: 4px;"></p>
+    <!-- Main Content 2 Columns -->
+    <div class="content-grid">
+      <!-- LEFT COLUMN: Main Gallery & Controls -->
+      <div class="left-main-col">
+        <!-- Category Tabs -->
+        <div class="category-tabs-bar" id="categoryTabs"></div>
+
+        <!-- Toolbar (Search, Size Slider, Background Toggle, View Mode) -->
+        <div class="toolbar-panel">
+          <div class="toolbar-row">
+            <!-- Search -->
+            <div class="search-container">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                <circle cx="11" cy="11" r="8"></circle>
+                <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+              </svg>
+              <input type="text" id="searchInput" placeholder="Tìm tên mẫu trang bị, hiệu ứng...">
+            </div>
+
+            <div class="tool-group">
+              <!-- Size Slider -->
+              <div class="slider-box" title="Thu phóng kích cỡ xem mẫu">
+                <span>Kích cỡ:</span>
+                <input type="range" id="sizeSlider" min="160" max="400" value="230" step="10">
+                <span id="sizeVal" style="color: var(--color-game-red); min-width: 38px;">230px</span>
+              </div>
+
+              <!-- Background Switcher -->
+              <div class="bg-toggle-box" title="Đổi màu phông nền hiển thị">
+                <button class="bg-btn-dot dark active" data-bg="bg-dark" title="Nền Tối Studio"></button>
+                <button class="bg-btn-dot black" data-bg="bg-black" title="Nền Đen Huyền (Soi Hào Quang Rực Rỡ)"></button>
+                <button class="bg-btn-dot nro" data-bg="bg-nro" title="Nền Nâu Đất NRO"></button>
+                <button class="bg-btn-dot checker" data-bg="bg-checker" title="Nền Trong Suốt (Kiểm Tra Viền)"></button>
+                <button class="bg-btn-dot white" data-bg="bg-white" title="Nền Sáng"></button>
+              </div>
+
+              <!-- View Switcher -->
+              <div class="view-mode-toggle">
+                <button class="view-btn active" id="viewGridBtn"><i class="fa-solid fa-border-all"></i> Lưới</button>
+                <button class="view-btn" id="viewCarouselBtn"><i class="fa-solid fa-film"></i> Trượt</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Carousel Mode -->
+        <div class="carousel-view" id="carouselView">
+          <div class="carousel-stage">
+            <span class="category-pill" id="carouselCat">Danh mục</span>
+            <img id="carouselImg" src="" alt="Mẫu trình chiếu">
+            <div style="margin-top: 14px; text-align: center;">
+              <h3 id="carouselTitle" style="font-size: 1.15rem; color: #fff; font-weight: 800;"></h3>
+              <p id="carouselMeta" style="color: #cbd5e1; font-size: 0.85rem; margin-top: 4px;"></p>
+            </div>
+          </div>
+          <div class="carousel-controls">
+            <button class="carousel-btn" id="carouselPrevBtn"><i class="fa-solid fa-chevron-left mr-1"></i> MẪU TRƯỚC</button>
+            <span id="carouselCounter" style="font-family: 'JetBrains Mono', monospace; font-size: 0.95rem; font-weight: 800; color: #3c1b04;">1 / 24</span>
+            <button class="carousel-btn" id="carouselNextBtn">MẪU TIẾP THEO <i class="fa-solid fa-chevron-right ml-1"></i></button>
+          </div>
+          <div class="carousel-strip" id="carouselStrip"></div>
+        </div>
+
+        <!-- Products Grid -->
+        <div class="products-grid" id="galleryGrid"></div>
+      </div>
+
+      <!-- RIGHT COLUMN: Sidebar Widgets (Pandorata Theme) -->
+      <div class="sidebar-space">
+        <!-- Widget 1: Hướng Dẫn Đặt Hàng -->
+        <div class="widget-box">
+          <div class="widget-header">
+            <i class="fa-solid fa-cart-shopping"></i> HƯỚNG DẪN ĐẶT HÀNG
+          </div>
+          <p class="widget-body-text">
+            Quý khách ưng ý mẫu trang bị nào chỉ cần nhấp vào nút <strong>"CHỌN MẪU NÀY"</strong> bên dưới sản phẩm để hệ thống tự động copy mã, sau đó gửi tin nhắn cho Shop để được hỗ trợ cài đặt nhanh chóng!
+          </p>
+          <a href="#" class="widget-btn-primary" onclick="showToast('Vui lòng chọn mẫu và gửi tin nhắn cho Shop!'); return false;">
+            <i class="fa-solid fa-paper-plane mr-1"></i> LIÊN HỆ ĐẶT HÀNG NGAY
+          </a>
+        </div>
+
+        <!-- Widget 2: Thống Kê Showroom -->
+        <div class="widget-box">
+          <div class="widget-header">
+            <i class="fa-solid fa-chart-simple"></i> THÔNG TIN KHO MẪU
+          </div>
+          <div class="stat-item-row">
+            <span>Tổng số mẫu có sẵn:</span>
+            <strong id="badgeTotalGifs">0</strong>
+          </div>
+          <div class="stat-item-row">
+            <span>Số danh mục trang bị:</span>
+            <strong id="badgeTotalCats">0</strong>
+          </div>
+          <div class="stat-item-row">
+            <span>Định dạng hoạt ảnh:</span>
+            <strong style="color: #059669;">Chuẩn Hiệu Ứng Game</strong>
+          </div>
+          <div class="stat-item-row">
+            <span>Tương thích Client:</span>
+            <strong style="color: #2563eb;">100% Phiên Bản NRO</strong>
+          </div>
+        </div>
+
+        <!-- Widget 3: Cam Kết Bựa 6677 -->
+        <div class="widget-box">
+          <div class="widget-header">
+            <i class="fa-solid fa-face-grin-tongue-wink"></i> CAM KẾT 6677 CỦA SHOP
+          </div>
+          <p class="widget-body-text" style="margin-bottom: 0;">
+            • Cam kết <strong>sáu bảy</strong>, <strong>sấu bẩy</strong>, <strong>xáu bải</strong>, <strong>67</strong>, <strong>6 7</strong>, <strong>6677</strong> bao mượt bao phê cho toàn thể anh em cư dân vũ trụ!<br>
+            • Hàng chuẩn đét từng pixel, không xàm xí, không lo 67 67.
+          </p>
         </div>
       </div>
-      <div class="carousel-controls">
-        <button class="carousel-btn" id="carouselPrevBtn">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="15 18 9 12 15 6"></polyline></svg>
-          Mẫu Trước
-        </button>
-        <span id="carouselCounter" style="font-family: 'JetBrains Mono', monospace; font-size: 0.92rem; color: #f59e0b; font-weight: 700;">1 / 24</span>
-        <button class="carousel-btn" id="carouselNextBtn">
-          Mẫu Kế Tiếp
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"></polyline></svg>
-        </button>
-      </div>
-      <div class="carousel-strip" id="carouselStrip"></div>
     </div>
-
-    <!-- Product Grid -->
-    <div class="gallery-grid" id="galleryGrid"></div>
   </div>
 
-  <!-- Modal Chi Tiết Mẫu -->
+  <!-- Modal Phóng To Toàn Màn Hình (Lightbox Popup NRO) -->
   <div class="modal-overlay" id="modalOverlay">
     <div class="modal-content">
       <div class="modal-header">
-        <h3 id="modalTitle">Chi Tiết Mẫu Trang Bị</h3>
+        <h3 id="modalTitle"><i class="fa-solid fa-gem mr-1"></i> CHI TIẾT MẪU TRANG BỊ</h3>
         <button class="modal-close" id="modalCloseBtn">
-            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
-          </button>
-        </div>
+          <i class="fa-solid fa-xmark"></i>
+        </button>
       </div>
       <div class="modal-body" id="modalBody">
         <button class="modal-nav prev" id="modalPrevBtn">
-          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="15 18 9 12 15 6"></polyline></svg>
+          <i class="fa-solid fa-chevron-left"></i>
         </button>
         <img id="modalImg" src="" alt="Mẫu phóng to">
-        
         <button class="modal-nav next" id="modalNextBtn">
-          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"></polyline></svg>
+          <i class="fa-solid fa-chevron-right"></i>
         </button>
       </div>
       <div class="modal-footer">
         <div class="modal-info-list">
-          <div>Phân loại: <strong id="modalCat" style="color: #f59e0b;">-</strong></div>
-          <div>Độ phân giải: <strong id="modalDim">-</strong></div>
-          
+          <div>Phân loại: <strong id="modalCat">-</strong></div>
+          <div>Kích thước pixel: <strong id="modalDim">-</strong></div>
         </div>
-        <div class="modal-buttons">
-          <button class="btn-order-modal" id="modalOrderBtn">
-            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
-            Chọn Mẫu Này Để Đặt Hàng
-          </button>
-        </div>
+        <button class="btn-modal-order" id="modalOrderBtn">
+          <i class="fa-solid fa-check mr-1"></i> CHỌN MẪU NÀY ĐỂ ĐẶT HÀNG
+        </button>
       </div>
     </div>
   </div>
 
-  <!-- Notification Toast -->
+  <!-- Toast Notification -->
   <div class="toast" id="toast">Đã sao chép mã mẫu!</div>
 
-  <script src="data.js?v=20261009024359"></script>
-  <script src="app.js?v=20261009024359"></script>
+  <script src="data.js?v=20261009025438"></script>
+  <script src="app.js?v=20261009025438"></script>
 </body>
 </html>

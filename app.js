@@ -1,4 +1,8 @@
-﻿// State Management
+﻿function cleanDisplayName(name) {
+  if (!name) return '';
+  return name.replace(/\.(gif|png|webp|jpe?g)$/i, '').replace(/_30fps/gi, '');
+}
+// State Management
 let currentCategory = 'all';
 let searchQuery = '';
 let currentFiltered = [];
@@ -34,7 +38,6 @@ const modalOverlay = document.getElementById('modalOverlay');
 const modalTitle = document.getElementById('modalTitle');
 const modalImg = document.getElementById('modalImg');
 const modalCat = document.getElementById('modalCat');
-const modalSize = document.getElementById('modalSize');
 const modalDim = document.getElementById('modalDim');
 const modalOrderBtn = document.getElementById('modalOrderBtn');
 const modalCloseBtn = document.getElementById('modalCloseBtn');
@@ -58,36 +61,37 @@ function formatBytes(bytes) {
 
 function showToast(msg) {
   const toast = document.getElementById('toast');
-  toast.textContent = msg;
+  toast.innerHTML = `<i class="fa-solid fa-check-circle" style="color: #facc15; margin-right: 6px;"></i> ${msg}`;
   toast.classList.add('show');
-  setTimeout(() => toast.classList.remove('show'), 2600);
+  setTimeout(() => toast.classList.remove('show'), 2800);
 }
 
 function copyOrderCode(item) {
-  const text = `[ĐẶT HÀNG] Tôi muốn đặt mẫu: ${item.name} (${item.category})`;
+  const text = `[ĐẶT HÀNG NRO] Tôi muốn đặt mẫu: ${cleanDisplayName(item.name)} (${item.category})`;
   navigator.clipboard.writeText(text);
-  showToast(`Đã sao chép mã mẫu "${item.name}"! Gửi tin nhắn cho Shop để đặt nhé ✨`);
+  showToast(`Đã sao chép mã mẫu "${cleanDisplayName(item.name)}"! Gửi tin nhắn cho Shop để chốt nhé!`);
 }
 
 function renderTabs() {
   categoryTabs.innerHTML = '';
   const allBtn = document.createElement('button');
-  allBtn.className = `tab-btn ${currentCategory === 'all' ? 'active' : ''}`;
-  allBtn.innerHTML = `Tất Cả Mẫu <span class="tab-count">${items.length}</span>`;
+  allBtn.className = `cat-tab-btn ${currentCategory === 'all' ? 'active' : ''}`;
+  allBtn.innerHTML = `<i class="fa-solid fa-layer-group"></i> TẤT CẢ <span class="cat-count">${items.length}</span>`;
   allBtn.addEventListener('click', () => setCategory('all'));
   categoryTabs.appendChild(allBtn);
 
   categories.forEach(cat => {
     const catCount = items.filter(i => i.category.toLowerCase() === cat.toLowerCase()).length;
     const btn = document.createElement('button');
-    btn.className = `tab-btn ${currentCategory === cat.toLowerCase() ? 'active' : ''}`;
-    btn.innerHTML = `${cat} <span class="tab-count">${catCount}</span>`;
+    btn.className = `cat-tab-btn ${currentCategory === cat.toLowerCase() ? 'active' : ''}`;
+    const icon = cat.toLowerCase().includes('vòng') ? 'fa-sun' : (cat.toLowerCase().includes('lưng') ? 'fa-feather' : 'fa-gem');
+    btn.innerHTML = `<i class="fa-solid ${icon}"></i> ${cat} <span class="cat-count">${catCount}</span>`;
     btn.addEventListener('click', () => setCategory(cat.toLowerCase()));
     categoryTabs.appendChild(btn);
   });
 
-  badgeTotalGifs.textContent = items.length;
-  badgeTotalCats.textContent = categories.length;
+  if (badgeTotalGifs) badgeTotalGifs.textContent = items.length;
+  if (badgeTotalCats) badgeTotalCats.textContent = categories.length;
 }
 
 function setCategory(cat) {
@@ -113,9 +117,9 @@ function renderGallery() {
   if (currentFiltered.length === 0) {
     galleryGrid.innerHTML = `
       <div class="empty-state">
-        <div class="empty-icon">💎</div>
+        <div class="empty-icon">🐲</div>
         <h3>Không tìm thấy mẫu phù hợp</h3>
-        <p>Danh mục này đang được cập nhật thêm mẫu mới hoặc không có tên khớp với từ khóa tìm kiếm. Quý khách vui lòng chọn danh mục khác!</p>
+        <p>Danh mục này chưa có mẫu hoặc không khớp với từ khóa tìm kiếm. Quý khách vui lòng chọn phân loại khác!</p>
       </div>
     `;
     return;
@@ -123,35 +127,34 @@ function renderGallery() {
 
   currentFiltered.forEach((item, index) => {
     const card = document.createElement('div');
-    card.className = 'product-card';
+    card.className = 'game-card';
     const safePath = encodeURI(item.path);
 
     card.innerHTML = `
-      <div class="product-preview" title="Nhấp vào để phóng to toàn màn hình">
-        <span class="product-tag">${item.category}</span>
+      <div class="card-sprite-stage" title="Nhấp vào để phóng to xem chi tiết">
+        <span class="category-pill">${item.category}</span>
         <img src="${safePath}" alt="${item.name}" loading="lazy" onload="recordDim(this, 'dim-${index}')">
       </div>
-      <div class="product-info">
-        <div class="product-name" title="${item.name}">${item.name}</div>
-        <div class="product-meta-row">
-          <span class="status-badge">Sẵn sàng giao</span>
-          <span style="font-family:'JetBrains Mono',monospace; font-size:0.75rem;" id="dim-${index}">...</span>
+      <div class="card-details">
+        <div class="card-name-title" title="${cleanDisplayName(item.name)}">${cleanDisplayName(item.name)}</div>
+        <div class="card-meta-line">
+          <span style="color: #059669;">● Sẵn sàng cài</span>
+          <span id="dim-${index}">...</span>
         </div>
-        <div class="product-actions">
-          <button class="btn-select-model" title="Sao chép tên mẫu này để gửi đặt hàng">
-            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
-            Chọn Mẫu Này
+        <div class="card-action-bar">
+          <button class="btn-game-order" title="Sao chép mã đặt mẫu này">
+            <i class="fa-solid fa-check"></i> CHỌN MẪU NÀY
           </button>
         </div>
       </div>
     `;
 
-    // Click whole card to open fullscreen modal
+    // Click anywhere on card (or sprite) to open large fullscreen modal
     card.addEventListener('click', () => openModal(index));
 
     // Button "Chọn Mẫu Này"
-    const selectBtn = card.querySelector('.btn-select-model');
-    selectBtn.addEventListener('click', (e) => {
+    const orderBtn = card.querySelector('.btn-game-order');
+    orderBtn.addEventListener('click', (e) => {
       e.stopPropagation();
       copyOrderCode(item);
     });
@@ -173,10 +176,9 @@ function openModal(index) {
   const item = currentFiltered[modalIndex];
   const safePath = encodeURI(item.path);
 
-  modalTitle.textContent = item.name;
+  modalTitle.innerHTML = `<i class="fa-solid fa-gem mr-1"></i> ${cleanDisplayName(item.name)}`;
   modalImg.src = safePath;
   modalCat.textContent = item.category;
-  modalSize.textContent = formatBytes(item.size);
 
   modalDim.textContent = '...';
   const tempImg = new Image();
@@ -224,9 +226,10 @@ sizeSlider.addEventListener('input', (e) => {
   document.documentElement.style.setProperty('--card-size', val + 'px');
 });
 
-document.querySelectorAll('.bg-opt').forEach(btn => {
+// Background switcher
+document.querySelectorAll('.bg-btn-dot').forEach(btn => {
   btn.addEventListener('click', () => {
-    document.querySelectorAll('.bg-opt').forEach(b => b.classList.remove('active'));
+    document.querySelectorAll('.bg-btn-dot').forEach(b => b.classList.remove('active'));
     btn.classList.add('active');
     const bgClass = btn.getAttribute('data-bg');
     document.body.className = bgClass;
@@ -277,9 +280,9 @@ function updateCarousel() {
 
   carouselImg.src = safePath;
   carouselCat.textContent = item.category;
-  carouselTitle.textContent = item.name;
+  carouselTitle.textContent = cleanDisplayName(item.name);
   carouselMeta.textContent = `Phân loại: ${item.category}`;
-  carouselCounter.textContent = `Mẫu ${carouselIndex + 1} / ${currentFiltered.length}`;
+  carouselCounter.textContent = `${carouselIndex + 1} / ${currentFiltered.length}`;
 
   const thumbs = carouselStrip.querySelectorAll('.carousel-thumb');
   thumbs.forEach((th, idx) => {
