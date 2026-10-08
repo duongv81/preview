@@ -36,8 +36,7 @@ const modalImg = document.getElementById('modalImg');
 const modalCat = document.getElementById('modalCat');
 const modalSize = document.getElementById('modalSize');
 const modalDim = document.getElementById('modalDim');
-const modalDownloadBtn = document.getElementById('modalDownloadBtn');
-const modalCopyBtn = document.getElementById('modalCopyBtn');
+const modalOrderBtn = document.getElementById('modalOrderBtn');
 const modalCloseBtn = document.getElementById('modalCloseBtn');
 const modalPrevBtn = document.getElementById('modalPrevBtn');
 const modalNextBtn = document.getElementById('modalNextBtn');
@@ -61,14 +60,20 @@ function showToast(msg) {
   const toast = document.getElementById('toast');
   toast.textContent = msg;
   toast.classList.add('show');
-  setTimeout(() => toast.classList.remove('show'), 2200);
+  setTimeout(() => toast.classList.remove('show'), 2600);
+}
+
+function copyOrderCode(item) {
+  const text = `[ĐẶT HÀNG] Tôi muốn đặt mẫu: ${item.name} (${item.category})`;
+  navigator.clipboard.writeText(text);
+  showToast(`Đã sao chép mã mẫu "${item.name}"! Gửi tin nhắn cho Shop để đặt nhé ✨`);
 }
 
 function renderTabs() {
   categoryTabs.innerHTML = '';
   const allBtn = document.createElement('button');
   allBtn.className = `tab-btn ${currentCategory === 'all' ? 'active' : ''}`;
-  allBtn.innerHTML = `Tất cả <span class="tab-count">${items.length}</span>`;
+  allBtn.innerHTML = `Tất Cả Mẫu <span class="tab-count">${items.length}</span>`;
   allBtn.addEventListener('click', () => setCategory('all'));
   categoryTabs.appendChild(allBtn);
 
@@ -108,9 +113,9 @@ function renderGallery() {
   if (currentFiltered.length === 0) {
     galleryGrid.innerHTML = `
       <div class="empty-state">
-        <div class="empty-icon">📁</div>
-        <h3>Không tìm thấy GIF nào</h3>
-        <p>Danh mục này chưa có file GIF hoặc không khớp với từ khóa tìm kiếm. Bạn có thể copy thêm file GIF vào thư mục và chạy cập nhật!</p>
+        <div class="empty-icon">💎</div>
+        <h3>Không tìm thấy mẫu phù hợp</h3>
+        <p>Danh mục này đang được cập nhật thêm mẫu mới hoặc không có tên khớp với từ khóa tìm kiếm. Quý khách vui lòng chọn danh mục khác!</p>
       </div>
     `;
     return;
@@ -118,38 +123,41 @@ function renderGallery() {
 
   currentFiltered.forEach((item, index) => {
     const card = document.createElement('div');
-    card.className = 'gif-card';
+    card.className = 'product-card';
     const safePath = encodeURI(item.path);
 
     card.innerHTML = `
-      <div class="card-preview">
-        <span class="card-badge-cat">${item.category}</span>
-        <span class="card-badge-dim" id="dim-${index}">...</span>
+      <div class="product-preview">
+        <span class="product-tag">${item.category}</span>
+        <span class="product-fps">30 FPS</span>
         <img src="${safePath}" alt="${item.name}" loading="lazy" onload="recordDim(this, 'dim-${index}')">
       </div>
-      <div class="card-info">
-        <div class="card-title" title="${item.name}">${item.name}</div>
-        <div class="card-meta">
-          <span class="card-size">${formatBytes(item.size)}</span>
-          <div class="card-actions">
-            <button class="action-btn copy-btn" title="Sao chép đường dẫn">
-              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
-            </button>
-            <a class="action-btn" href="${safePath}" download="${item.name}" title="Tải file" onclick="event.stopPropagation()">
-              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
-            </a>
-          </div>
+      <div class="product-info">
+        <div class="product-name" title="${item.name}">${item.name}</div>
+        <div class="product-meta-row">
+          <span class="status-badge">Sẵn sàng giao</span>
+          <span style="font-family:'JetBrains Mono',monospace; font-size:0.75rem;" id="dim-${index}">...</span>
+        </div>
+        <div class="product-actions">
+          <button class="btn-select-model" title="Sao chép tên mẫu này để gửi đặt hàng">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+            Chọn Mẫu Này
+          </button>
+          <button class="btn-icon-action view-btn-card" title="Xem chi tiết phóng to">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+          </button>
         </div>
       </div>
     `;
 
+    // Click whole card to open modal
     card.addEventListener('click', () => openModal(index));
-    const copyBtn = card.querySelector('.copy-btn');
-    copyBtn.addEventListener('click', (e) => {
+
+    // Button "Chọn Mẫu Này"
+    const selectBtn = card.querySelector('.btn-select-model');
+    selectBtn.addEventListener('click', (e) => {
       e.stopPropagation();
-      const fullUrl = new URL(safePath, window.location.href).href;
-      navigator.clipboard.writeText(fullUrl);
-      showToast('Đã sao chép link GIF!');
+      copyOrderCode(item);
     });
 
     galleryGrid.appendChild(card);
@@ -159,7 +167,7 @@ function renderGallery() {
 window.recordDim = function(img, elementId) {
   const el = document.getElementById(elementId);
   if (el && img.naturalWidth) {
-    el.textContent = `${img.naturalWidth}×${img.naturalHeight}`;
+    el.textContent = `${img.naturalWidth}×${img.naturalHeight}px`;
   }
 };
 
@@ -173,8 +181,6 @@ function openModal(index) {
   modalImg.src = safePath;
   modalCat.textContent = item.category;
   modalSize.textContent = formatBytes(item.size);
-  modalDownloadBtn.href = safePath;
-  modalDownloadBtn.download = item.name;
 
   modalDim.textContent = '...';
   const tempImg = new Image();
@@ -182,6 +188,8 @@ function openModal(index) {
     modalDim.textContent = `${tempImg.naturalWidth} × ${tempImg.naturalHeight} px`;
   };
   tempImg.src = safePath;
+
+  modalOrderBtn.onclick = () => copyOrderCode(item);
 
   modalOverlay.classList.add('active');
 }
@@ -205,14 +213,6 @@ modalNextBtn.addEventListener('click', (e) => {
   e.stopPropagation();
   modalIndex = (modalIndex + 1) % currentFiltered.length;
   openModal(modalIndex);
-});
-
-modalCopyBtn.addEventListener('click', () => {
-  const item = currentFiltered[modalIndex];
-  const safePath = encodeURI(item.path);
-  const fullUrl = new URL(safePath, window.location.href).href;
-  navigator.clipboard.writeText(fullUrl);
-  showToast('Đã sao chép link GIF!');
 });
 
 window.addEventListener('keydown', (e) => {
@@ -282,8 +282,8 @@ function updateCarousel() {
   carouselImg.src = safePath;
   carouselCat.textContent = item.category;
   carouselTitle.textContent = item.name;
-  carouselMeta.textContent = `${formatBytes(item.size)} • ${item.category}`;
-  carouselCounter.textContent = `${carouselIndex + 1} / ${currentFiltered.length}`;
+  carouselMeta.textContent = `Phân loại: ${item.category} • Hoạt ảnh mượt 30 FPS`;
+  carouselCounter.textContent = `Mẫu ${carouselIndex + 1} / ${currentFiltered.length}`;
 
   const thumbs = carouselStrip.querySelectorAll('.carousel-thumb');
   thumbs.forEach((th, idx) => {
