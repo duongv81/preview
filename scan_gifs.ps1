@@ -29,6 +29,7 @@ foreach ($file in $allFiles) {
     }
 }
 
+$timestamp = (Get-Date).ToString("yyyyMMddHHmmss")
 $dataObj = [PSCustomObject]@{
     categories = $categories
     items      = $items
@@ -39,4 +40,13 @@ $json = $dataObj | ConvertTo-Json -Depth 5
 $content = "window.GIF_DATA = " + $json + ";"
 [System.IO.File]::WriteAllText((Join-Path $previewDir "data.js"), $content, [System.Text.Encoding]::UTF8)
 
-Write-Host "Scanned $($items.Count) files across $($categories.Count) categories into data.js"
+# Update cache-busting timestamp in index.html
+$indexPath = Join-Path $previewDir "index.html"
+if (Test-Path $indexPath) {
+    $html = [System.IO.File]::ReadAllText($indexPath, [System.Text.Encoding]::UTF8)
+    $html = [System.Text.RegularExpressions.Regex]::Replace($html, 'src="data\.js(\?v=[^"]*)?"', "src=`"data.js?v=$timestamp`"")
+    $html = [System.Text.RegularExpressions.Regex]::Replace($html, 'src="app\.js(\?v=[^"]*)?"', "src=`"app.js?v=$timestamp`"")
+    [System.IO.File]::WriteAllText($indexPath, $html, [System.Text.Encoding]::UTF8)
+}
+
+Write-Host "Scanned $($items.Count) files across $($categories.Count) categories into data.js (v=$timestamp)"
