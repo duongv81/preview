@@ -122,7 +122,14 @@ function renderTabs() {
     const catCount = items.filter(i => i.category.toLowerCase() === cat.toLowerCase()).length;
     const btn = document.createElement('button');
     btn.className = `cat-tab-btn ${currentCategory === cat.toLowerCase() ? 'active' : ''}`;
-    const icon = cat.toLowerCase().includes('vòng') ? 'fa-sun' : (cat.toLowerCase().includes('lưng') ? 'fa-feather' : 'fa-gem');
+    const lower = cat.toLowerCase();
+    let icon = 'fa-gem';
+    if (lower.includes('vòng')) icon = 'fa-sun';
+    else if (lower.includes('lưng')) icon = 'fa-feather';
+    else if (lower.includes('thú') || lower.includes('pet')) icon = 'fa-paw';
+    else if (lower.includes('ván') || lower.includes('bay')) icon = 'fa-wind';
+    else if (lower.includes('cánh')) icon = 'fa-dragon';
+    else if (lower.includes('gậy') || lower.includes('vũ khí')) icon = 'fa-wand-magic-sparkles';
     btn.innerHTML = `<i class="fa-solid ${icon}"></i> ${cat} <span class="cat-count">${catCount}</span>`;
     btn.addEventListener('click', () => setCategory(cat.toLowerCase()));
     categoryTabs.appendChild(btn);
