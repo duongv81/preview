@@ -22,6 +22,62 @@
                       "createdAt":  "2026-09-25"
                   },
                   {
+                      "name":  "haoquang_1_done_1_10fps.gif",
+                      "category":  "vòng ánh sáng",
+                      "path":  "assets/vòng ánh sáng/haoquang_1_done_1_10fps.gif",
+                      "size":  85075,
+                      "createdAt":  "2026-10-09"
+                  },
+                  {
+                      "name":  "haoquang_1_done_2_10fps.gif",
+                      "category":  "vòng ánh sáng",
+                      "path":  "assets/vòng ánh sáng/haoquang_1_done_2_10fps.gif",
+                      "size":  128497,
+                      "createdAt":  "2026-10-09"
+                  },
+                  {
+                      "name":  "haoquang_2_done_1_10fps.gif",
+                      "category":  "vòng ánh sáng",
+                      "path":  "assets/vòng ánh sáng/haoquang_2_done_1_10fps.gif",
+                      "size":  122074,
+                      "createdAt":  "2026-10-09"
+                  },
+                  {
+                      "name":  "haoquang_2_done_2_10fps.gif",
+                      "category":  "vòng ánh sáng",
+                      "path":  "assets/vòng ánh sáng/haoquang_2_done_2_10fps.gif",
+                      "size":  144343,
+                      "createdAt":  "2026-10-09"
+                  },
+                  {
+                      "name":  "haoquang_3_done_1_10fps.gif",
+                      "category":  "vòng ánh sáng",
+                      "path":  "assets/vòng ánh sáng/haoquang_3_done_1_10fps.gif",
+                      "size":  102204,
+                      "createdAt":  "2026-10-09"
+                  },
+                  {
+                      "name":  "haoquang_3_done_2_10fps.gif",
+                      "category":  "vòng ánh sáng",
+                      "path":  "assets/vòng ánh sáng/haoquang_3_done_2_10fps.gif",
+                      "size":  154798,
+                      "createdAt":  "2026-10-09"
+                  },
+                  {
+                      "name":  "haoquang_4_export_1_10fps.gif",
+                      "category":  "vòng ánh sáng",
+                      "path":  "assets/vòng ánh sáng/haoquang_4_export_1_10fps.gif",
+                      "size":  259585,
+                      "createdAt":  "2026-10-09"
+                  },
+                  {
+                      "name":  "haoquang_4_export_2_10fps.gif",
+                      "category":  "vòng ánh sáng",
+                      "path":  "assets/vòng ánh sáng/haoquang_4_export_2_10fps.gif",
+                      "size":  301596,
+                      "createdAt":  "2026-10-09"
+                  },
+                  {
                       "name":  "haoquang_6_1_30fps (1).gif",
                       "category":  "vòng ánh sáng",
                       "path":  "assets/vòng ánh sáng/haoquang_6_1_30fps (1).gif",
@@ -176,5 +232,5 @@
                       "createdAt":  "2026-10-09"
                   }
               ],
-    "updatedAt":  "2026-10-09 12:29:47"
+    "updatedAt":  "2026-10-09 20:57:10"
 };
