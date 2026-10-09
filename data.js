@@ -158,7 +158,7 @@
                       "name":  "hao_quang_legends_export_2_30fps.gif",
                       "category":  "vòng ánh sáng",
                       "path":  "assets/vòng ánh sáng/hao_quang_legends_export_2_30fps.gif",
-                      "size":  1583798,
+                      "size":  299030,
                       "createdAt":  "2026-09-25"
                   },
                   {
@@ -232,5 +232,5 @@
                       "createdAt":  "2026-10-09"
                   }
               ],
-    "updatedAt":  "2026-10-09 20:57:10"
+    "updatedAt":  "2026-10-09 21:03:46"
 };
